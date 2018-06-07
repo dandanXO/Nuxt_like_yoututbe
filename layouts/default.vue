@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app primary>
     <v-navigation-drawer
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -80,6 +80,7 @@
 </template>
 
 <script>
+ 
   export default {
     data() {
       return {
@@ -87,13 +88,12 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Welcome', to: '/' },
-          { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' }
+          { icon: 'apps', title: 'Home', to: '/' }
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js'
+        title: 'Like Youtubes'
       }
     }
   }
