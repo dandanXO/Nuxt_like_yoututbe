@@ -22,7 +22,9 @@
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-divider></v-divider>
       </v-list>
+      
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
@@ -69,12 +71,29 @@
           <v-list-tile-action>
             <v-icon light>compare_arrows</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
+          <v-list-tile-title>Your Lists (click me Switch)</v-list-tile-title>
         </v-list-tile>
+      </v-list>
+      <v-list>
+        <v-list-tile
+          router
+          :to="'#test'"
+          :key="i"
+          v-for="(list, i) in getlist"
+          exact
+        >
+          <v-list-tile-action>
+            <v-icon v-html="'apps'"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="list"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider></v-divider>
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/hsr-Mu4Mdwk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe width="10" height="10" src="https://www.youtube.com/embed/hsr-Mu4Mdwk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
@@ -89,7 +108,7 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Home', to: '/' },
+          { icon: 'home', title: 'Home', to: '/' },
           { icon: 'search', title: 'search', to: '/search' }
         ],
         miniVariant: false,
@@ -97,6 +116,14 @@
         rightDrawer: false,
         title: 'Like Youtubes'
       }
+    },
+    computed:{
+      getlist () { 
+        return  this.$store.getters['list/getlists'] 
+      } 
+    },
+    created: function() {
+      this.$store.dispatch('list/setlists') 
     }
   }
 </script>

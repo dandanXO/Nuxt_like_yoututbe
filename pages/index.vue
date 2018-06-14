@@ -32,7 +32,7 @@
             </div>
             </v-card-title>
             <v-card-actions>
-            <v-btn flat color="orange">add to album</v-btn>
+            <addtolist :video="item"></addtolist>
             <v-btn flat color="orange" :href="'https://www.youtube.com/embed/'+item.id.videoId">Full</v-btn>
             </v-card-actions>
         </v-card>
@@ -44,14 +44,17 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import axios from 'axios'
+import addtolist from '~/components/addtolist.vue'
 export default {
   components: {
     Logo,
-    VuetifyLogo
+    VuetifyLogo,
+    addtolist
   },
-  async asyncData (context) {
+  async asyncData ({store}) {
     let {data} = await axios.get('http://dandan.tw:3000/api/dashboard')
-    console.log({data}.data[1])
+    //console.log({data})
+    store.dispatch('list/setlists')
     return {  reults: {data}.data[1] }
   }
 }

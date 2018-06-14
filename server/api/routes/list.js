@@ -3,18 +3,40 @@ const router = express.Router()
 const rp = require('request-promise')
 const admin = require('firebase-admin');
 
-router.get('/add', (req, res, next) => {
+router.post('/addlist', (req, res, next) => {
     //const id = req.query.id
-
-    const list  = admin.firestore().collection('list1').doc()
+    const listname = req.body.listname
+    console.log(listname)
+    const list  = admin.firestore().collection(listname).doc()
     list.set({
-        id:'DeXoACwOT1o',
-    title:'2-Hours Epic Music Mix | THE POWER OF EPIC MUSIC - Full Mix Vol. 2'
+    id:'',
+    title:''
     })
     res.status(201).json({
-        id:'DeXoACwOT1o',
-    title:'2-Hours Epic Music Mix | THE POWER OF EPIC MUSIC - Full Mix Vol. 2'
+        message:'addlist'
     });
+})
+
+router.get('/getlists', (req, res, next) => {
+    const lists  = admin.firestore()
+    lists.getCollections()
+    .then(getCollections => {
+        const collectionArray = []
+        getCollections.forEach(collection => {
+            console.log('Found subcollection with id:', collection.id)
+            collectionArray.push(collection.id)
+        })
+    return collectionArray
+    })
+    .then(collectionArray =>{
+        res.status(201).json({
+            lists: collectionArray
+        });
+    })
+    .catch(err =>{
+        console.log("Error getting document++++++++" +err)
+    })
+   
 })
 
 module.exports = router;
