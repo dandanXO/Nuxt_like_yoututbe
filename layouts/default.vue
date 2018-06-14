@@ -74,6 +74,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/hsr-Mu4Mdwk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
@@ -88,7 +89,8 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Home', to: '/' }
+          { icon: 'apps', title: 'Home', to: '/' },
+          { icon: 'search', title: 'search', to: '/search' }
         ],
         miniVariant: false,
         right: true,

@@ -7,9 +7,13 @@ const port = process.env.PORT || 3000
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
+//Config
+const firebase_config = require('./config/firebase_config')
+
 //routes
 const dashboard = require('./api/routes/dashboard')
 const search = require('./api/routes/search')
+const list = require('./api/routes/list')
 
 app.set('port', port)
 
@@ -28,7 +32,7 @@ app.use(session({
 //Routes which should handle requests
 app.use('/api/dashboard',dashboard)
 app.use('/api/search',search)
-
+app.use('/api/list',list)
 // // errro control
 // app.use((req, res, next)=>{
 //   const error = new Error('Not found');

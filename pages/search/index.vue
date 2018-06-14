@@ -1,5 +1,5 @@
 <template>
-  <v-container align-content-center>
+  <v-container align-content>
         <v-layout row wrap>
             <v-flex xs12 >
                 <v-card-text id="display-4font">
@@ -12,11 +12,37 @@
                 <v-btn icon @click="search()">
                     <v-icon>search</v-icon>
                 </v-btn>
-                <v-btn >{{ number }}</v-btn>
                 </v-toolbar>
-                <div>{{searchWords}}</div>
-                <div>{{dataOfSearch}}</div>
+                <div>
+                    <p  class="text-xs-center display-1">Your Searching for {{searchWords}}</p>
+                </div>
         </v-flex>
+        </v-layout>
+        <v-layout  row wrap>
+            <v-flex sm6
+            v-for="item in dataOfSearch.items"
+            :key="item.id.videoId">
+            <v-card >
+                <v-card-media src="" height="400px">
+                <iframe width=100% height=100% :src="'https://www.youtube.com/embed/'+item.id.videoId" allowfullscreen></iframe>
+                </v-card-media>
+                <v-card-title primary-title>
+                <div>
+                    <h3 class="headline mb-0">{{item.snippet.title}}</h3>
+                    <p>{{item.snippet.description}}</p>
+                </div>
+                </v-card-title>
+                <v-card-actions>
+                <addtolist :video="item"></addtolist>
+                
+                <v-btn flat color="orange" :href="'https://www.youtube.com/embed/'+item.id.videoId">Full</v-btn>
+                </v-card-actions>
+            </v-card>
+            </v-flex>
+            <v-btn v-if="dataOfSearch.prevPageToken" @click="prePage()" color="info">prev page </v-btn>
+                <v-spacer  v-if="dataOfSearch.prevPageToken"></v-spacer>
+            <v-btn class="text-xs-right" left v-if="dataOfSearch.nextPageToken" @click="nextPage()" color="info">next page </v-btn>
+            
         </v-layout>
     </v-container>
 </template>
@@ -25,9 +51,11 @@
 
 //import
 import axios from 'axios'
-
+import addtolist from '~/components/addtolist.vue'
 export default {
-    components: {},
+    components: {
+            addtolist
+        },
     async asyncData(context) {
        return  {}    },
     computed: {
@@ -36,10 +64,7 @@ export default {
       },
     },
     methods:{
-        countplz(){
-             this.$store.commit('increment')
-        },
-        search(q){
+        search(){
             const searchWords = this.searchWords
             axios.get('http://dandan.tw:3000/api/search',{
                 headers: {
@@ -49,15 +74,68 @@ export default {
                 }
             })
             .then((respo) => {
-                this.dataOfSearch =respo
+                this.dataOfSearch =respo.data[1]
+                if(respo.data[1].nextPageToken){
+                    this.nextPageToken=respo.data[1].nextPageToken
+                }
                 console.log(this.dataOfSearch)
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+        },
+        nextPage(){
+            const nextPageToken = this.nextPageToken
+            axios.get('http://dandan.tw:3000/api/search/nextpage',{
+                headers: {
+                },
+                params: {
+                    q: this.searchWords ,
+                    nextPageToken: nextPageToken
+                }
+            })
+            .then((respo) => {
+                this.dataOfSearch =respo.data[1]
+                if(respo.data[1].nextPageToken){
+                    this.nextPageToken=respo.data[1].nextPageToken
+                }
+                if(respo.data[1].prevPageToken){
+                    this.prevPageToken=respo.data[1].prevPageToken
+                }
+                console.log(this.dataOfSearch)
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+        },
+        prePage(){
+            const prevPageToken = this.prevPageToken
+            axios.get('http://dandan.tw:3000/api/search/nextpage',{
+                headers: {
+                },
+                params: {
+                    q: this.searchWords ,
+                    nextPageToken: prevPageToken
+                }
+            })
+            .then((respo) => {
+                this.dataOfSearch =respo.data[1]
+                if(respo.data[1].nextPageToken){
+                    this.nextPageToken=respo.data[1].nextPageToken
+                }
+                console.log(this.dataOfSearch)
+            })
+            .catch(e =>{
+                console.log(e)
             })
         }
     },
     data() {
        return{
-           searchWords: '',
-           dataOfSearch:""
+           searchWords: "",
+           dataOfSearch:"",
+           nextPageToken: "",
+           prevPageToken:""
        }
     }
 };
