@@ -17,8 +17,9 @@
                 <v-btn color="blue"   @click="createlist()"  :disabled="!listnameIsValid">create</v-btn>
               </v-flex>
               <v-flex xs12>
-                <v-select v-model="choselistname"
+                <v-select 
                   :items="getlist"
+                  v-model="choselistname"
                   label="list"
                   required>
                 </v-select>
@@ -27,7 +28,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat="flat" @click.native="addtolist = false"  :disabled="!choselistnameIsValid" >add</v-btn>
+            <v-btn color="green darken-1" flat="flat"  @click="addSongTolist"  v-model="choselistname"  :loading="loading" :disabled="loading"  >add</v-btn>
             <v-btn color="red darken-1" flat="flat" @click.native="addtolist = false" >cancel</v-btn>
           </v-card-actions>
       </v-card>
@@ -45,8 +46,10 @@ export default {
   data () {
     return {
       addtolist: false,
+      title:this.video.snippet.title,
+      id:this.video.id.videoId,
       listname:"",
-      choselistname:""
+      choselistname: this.$store.getters['list/getlists'] 
     }
   },
   computed: {
@@ -58,10 +61,17 @@ export default {
     },
     choselistnameIsValid () {
        return this.choselistname !==''
+    },
+    loading () {
+      return  this.$store.getters['list/getloading'] 
     }
   },
   methods:{
-     setlists(){
+    addSongTolist(){
+      console.log(this.title+this.id)
+      this.$store.dispatch('list/addsongtolist',{choselistname:this.choselistname,title:this.title,id:this.id})
+    },
+    setlists(){
       this.$store.dispatch('list/setlists')
     },
     createlist(){

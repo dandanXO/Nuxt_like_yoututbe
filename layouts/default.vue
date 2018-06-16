@@ -119,6 +119,7 @@
     },
     computed:{
       getlist () { 
+        console.log('defult')
         return  this.$store.getters['list/getlists'] 
       } 
     },
