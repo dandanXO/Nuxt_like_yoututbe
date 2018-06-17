@@ -77,7 +77,7 @@
       <v-list>
         <v-list-tile
           router
-          :to="'#test'"
+          :to="'/list/'+list"
           :key="i"
           v-for="(list, i) in getlist"
           exact
@@ -93,7 +93,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <iframe width="10" height="10" src="https://www.youtube.com/embed/hsr-Mu4Mdwk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe width="100" height="100" src="https://www.youtube.com/embed/hsr-Mu4Mdwk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
@@ -118,8 +118,7 @@
       }
     },
     computed:{
-      getlist () { 
-        console.log('defult')
+    getlist () { 
         return  this.$store.getters['list/getlists'] 
       } 
     },

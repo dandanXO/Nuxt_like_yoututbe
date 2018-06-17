@@ -77,5 +77,31 @@ router.get('/getlists', (req, res, next) => {
     })
    
 })
+router.get('/getlistsongs', (req, res, next) => {
+    const listNmae = req.query.listname
+    const songs =[]
+    const listRef = admin.firestore().collection(listNmae)
+    listRef.get()
+    .then(snapshot => {
+        snapshot.forEach(doc => {
+            songs.push(doc.data())
+            //console.log(doc.id, '=>', doc.data())
+          })
+        res.status(200).json({
+            message:'get list Songs',
+            succuess: true,
+            songs:songs
+        })
+    })
+    .catch(err => {
+      console.log('Error getting documents', err)
+
+      res.status(200).json({
+        message:'get list Songs have something wrong.',
+        succuess: false
+    })
+    })
+})
+
 
 module.exports = router;

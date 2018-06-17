@@ -34,7 +34,7 @@ export const actions = {
     setlists ({commit}) {
         axios.get('http://dandan.tw:3000/api/list/getlists')
             .then((respo) => {
-                //console.log(respo.data.lists)
+                //console.log(respo.data)
                 commit('setlists',respo.data.lists)
             })
             .catch(e =>{

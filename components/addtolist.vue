@@ -28,10 +28,12 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat="flat"  @click="addSongTolist"  v-model="choselistname"  :loading="loading" :disabled="loading"  >add</v-btn>
+            <v-btn color="green darken-1" flat="flat"  @click="addSongTolist" @click.native="alertshow=true"  :loading="loading" :disabled="loading||!choselistnameIsValid"  >add</v-btn>
             <v-btn color="red darken-1" flat="flat" @click.native="addtolist = false" >cancel</v-btn>
           </v-card-actions>
+          <alert v-show="alertshow" :message="'test message'" :success="true"></alert>
       </v-card>
+        
     </v-layout>
   </v-dialog>
 </div>
@@ -40,8 +42,12 @@
 <script>
 
 //import
+import alert from '~/components/alert.vue'
 
 export default {
+  components:{
+    alert
+  },
   props: ['video'],
   data () {
     return {
@@ -49,7 +55,8 @@ export default {
       title:this.video.snippet.title,
       id:this.video.id.videoId,
       listname:"",
-      choselistname: this.$store.getters['list/getlists'] 
+      choselistname: "",
+      alertshow: false
     }
   },
   computed: {
