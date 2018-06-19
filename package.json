@@ -4,8 +4,14 @@
   "description": "make a website and like youtube feature",
   "author": "DandanXO",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3000"
+    }
+    },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server  HOST=127.0.0.1 PORT=3000 nuxt",
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server nuxt",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate",

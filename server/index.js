@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000
 const session = require('express-session')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
-
+console.log( process.env + '  '+ process.env.PORT)
 //Config
 const firebase_config = require('./config/firebase_config')
 
@@ -25,6 +25,19 @@ config.dev = !(process.env.NODE_ENV === 'production')
 //bodyParser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//add header
+app.use((req,res,next)=>{
+  res.header('Access-Control-Allow-Origin','*')
+  res.header('Access-Control-Allow-Headers','Origin, X-Requested-Width, Content-Type, Accept, Authorization')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+  if(req.method==='OPSTIONS'){
+      res.header('Access-Control-Allow-Mehtods','PUT, POST,PATH,DELETE,GET')
+      return res.status(200).json({})
+  }
+  next()
+})
 
 //session
 app.use(session({
