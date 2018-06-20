@@ -93,7 +93,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <iframe width="100" height="100" src="https://www.youtube.com/embed/hsr-Mu4Mdwk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe width="100" height="100" :src="'https://www.youtube.com/embed/'+play+'?rel=0&autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
@@ -119,8 +119,11 @@
     },
     computed:{
     getlist () { 
-        return  this.$store.getters['list/getlists'] 
-      } 
+      return  this.$store.getters['list/getlists'] 
+      } ,
+    play(){
+      return  this.$store.getters['player/play'] 
+    }
     },
     created: function() {
       this.$store.dispatch('list/setlists') 

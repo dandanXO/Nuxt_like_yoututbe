@@ -34,6 +34,7 @@
             <v-card-actions>
             <addtolist :video="item"></addtolist>
             <v-btn flat color="orange" :href="'https://www.youtube.com/embed/'+item.id.videoId">Full</v-btn>
+            <player :video="item"></player>
             </v-card-actions>
         </v-card>
     </v-flex>
@@ -43,13 +44,16 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
+
 import axios from 'axios'
 import addtolist from '~/components/addtolist.vue'
+import player from '~/components/player.vue'
 export default {
   components: {
     Logo,
     VuetifyLogo,
-    addtolist
+    addtolist,
+    player
   },
   async asyncData ({store}) {
     let {data} = await axios.get('http://dandan.tw:3000/api/dashboard')
@@ -57,5 +61,6 @@ export default {
     store.dispatch('list/setlists')
     return {  reults: {data}.data[1] }
   }
+  
 }
 </script>

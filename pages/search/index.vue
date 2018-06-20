@@ -52,6 +52,7 @@
 //import
 import axios from 'axios'
 import addtolist from '~/components/addtolist.vue'
+import player from '~/components/player.vue'
 export default {
     components: {
             addtolist
