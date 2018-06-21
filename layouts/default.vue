@@ -93,7 +93,12 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <iframe width="100" height="100" :src="'https://www.youtube.com/embed/'+play+'?rel=0&autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+       <no-ssr  placeholder="Loading...">
+             <youtube  @ready="ready" :player-vars="{ autoplay: 1 }" :player-width="100" :player-height="100" :video-id="playId" />
+       </no-ssr>
+  
+      <v-btn @click="play">play</v-btn>
+      <v-btn @click="pause">pause</v-btn>
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
@@ -102,11 +107,14 @@
 <script>
  
   export default {
+    components:{
+      
+    },
     data() {
       return {
         clipped: false,
         drawer: true,
-        fixed: false,
+        fixed: true,
         items: [
           { icon: 'home', title: 'Home', to: '/' },
           { icon: 'search', title: 'search', to: '/search' }
@@ -121,12 +129,23 @@
     getlist () { 
       return  this.$store.getters['list/getlists'] 
       } ,
-    play(){
+    playId(){
       return  this.$store.getters['player/play'] 
     }
     },
     created: function() {
       this.$store.dispatch('list/setlists') 
+    },
+    methods:{
+      ready (player) {
+        this.player = player
+      },
+      play (player) {
+        this.player.playVideo()
+      },
+      pause () {
+       this.player.pauseVideo()
+      }
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-btn  flat color="orange"  @click="play()"  slot="activator">
+  <v-btn  flat color="orange"  @click="setandplay()"  slot="activator">
       play
   </v-btn>
 </div>
@@ -26,7 +26,7 @@ export default {
     }
   },
   methods:{
-    play (){
+    setandplay (){
         console.log(this.id)
          this.$store.dispatch('player/play',this.id)
     }

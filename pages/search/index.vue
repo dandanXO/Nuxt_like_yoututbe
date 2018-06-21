@@ -34,14 +34,15 @@
                 </v-card-title>
                 <v-card-actions>
                 <addtolist :video="item"></addtolist>
-                
                 <v-btn flat color="orange" :href="'https://www.youtube.com/embed/'+item.id.videoId">Full</v-btn>
+                <player  :video="item"></player>
                 </v-card-actions>
             </v-card>
             </v-flex>
             <v-btn v-if="dataOfSearch.prevPageToken" @click="prePage()" color="info">prev page </v-btn>
                 <v-spacer  v-if="dataOfSearch.prevPageToken"></v-spacer>
             <v-btn class="text-xs-right" left v-if="dataOfSearch.nextPageToken" @click="nextPage()" color="info">next page </v-btn>
+         
             
         </v-layout>
     </v-container>
@@ -51,11 +52,14 @@
 
 //import
 import axios from 'axios'
+
+
 import addtolist from '~/components/addtolist.vue'
 import player from '~/components/player.vue'
 export default {
     components: {
-            addtolist
+            addtolist,
+            player
         },
     async asyncData(context) {
        return  {}    },
