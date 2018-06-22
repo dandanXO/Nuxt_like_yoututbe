@@ -56,7 +56,7 @@ export default {
     player
   },
   async asyncData ({store}) {
-    let {data} = await axios.get('http://dandan.tw:3000/api/dashboard')
+    let {data} = await axios.get( process.env.API_URL+'dashboard')
     //console.log({data})
     store.dispatch('list/setlists')
     return {  reults: {data}.data[1] }

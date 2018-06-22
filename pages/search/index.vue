@@ -71,7 +71,7 @@ export default {
     methods:{
         search(){
             const searchWords = this.searchWords
-            axios.get('http://dandan.tw:3000/api/search',{
+            axios.get(process.env.API_URL+'search',{
                 headers: {
                 },
                 params: {
@@ -91,7 +91,7 @@ export default {
         },
         nextPage(){
             const nextPageToken = this.nextPageToken
-            axios.get('http://dandan.tw:3000/api/search/nextpage',{
+            axios.get(process.env.API_URL+'search/nextpage',{
                 headers: {
                 },
                 params: {
@@ -115,7 +115,7 @@ export default {
         },
         prePage(){
             const prevPageToken = this.prevPageToken
-            axios.get('http://dandan.tw:3000/api/search/nextpage',{
+            axios.get(process.env.API_URL+'search/nextpage',{
                 headers: {
                 },
                 params: {

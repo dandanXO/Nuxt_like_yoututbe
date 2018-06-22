@@ -4,10 +4,12 @@
          <v-data-table
             :headers="headers"
             :items="songs"
+            :disable-initial-sort="disableinitialsort"
             class="elevation-1"
             prev-icon="mdi-menu-left"
             next-icon="mdi-menu-right"
             sort-icon="mdi-menu-down"
+            
         >
             <template slot="items" slot-scope="props">
             <td  class="text-xs-left">{{ props.item.title }}</td>
@@ -22,7 +24,7 @@ import axios from 'axios'
 
 export default{
     async asyncData (context) {
-    let {data} = await axios.get('http://dandan.tw:3000/api/list/getlistsongs',{
+    let {data} = await axios.get(process.env.API_URL+'list/getlistsongs',{
                 headers: {
                 },
                 params: {
@@ -34,8 +36,9 @@ export default{
   },
   data () {
       return {
+          disableinitialsort:true,
           headers:[
-              {text:'title',value:'title'},
+              {text:'title',value:'title',sortable: false,},
               {text:'id',value:'id'}
             ]
       }

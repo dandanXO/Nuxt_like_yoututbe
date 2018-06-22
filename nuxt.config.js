@@ -20,7 +20,12 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
-
+  /*
+  ** Customize the env props
+  */
+  env: {
+    API_URL:  'http://localhost:3000/api/'
+  },
   /*
   ** Customize the progress-bar color
   */

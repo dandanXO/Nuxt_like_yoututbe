@@ -17,7 +17,7 @@ export const getters = {
 export const actions = {
     addsongtolist({commit,dispatch},payload){
         commit('setloading',true)
-        axios.post('http://dandan.tw:3000/api/list/addsongtolist',{
+        axios.post(process.env.API_URL+'list/addsongtolist',{
             title: payload.title,
             choselistname: payload.choselistname,
             id: payload.id
@@ -32,7 +32,7 @@ export const actions = {
         })
     },
     setlists ({commit}) {
-        axios.get('http://dandan.tw:3000/api/list/getlists')
+        axios.get(process.env.API_URL+'list/getlists')
             .then((respo) => {
                 //console.log(respo.data)
                 commit('setlists',respo.data.lists)
@@ -43,7 +43,7 @@ export const actions = {
     },
     createlist({commit,dispatch},payload){
         //console.log(payload)
-        axios.post('http://dandan.tw:3000/api/list/addlist',{
+        axios.post(process.env.API_URL+'list/addlist',{
                 listname: payload
             })
             .then(res =>{

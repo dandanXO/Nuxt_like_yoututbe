@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-btn  flat color="orange"  @click="setandplay()"  slot="activator">
+  <v-btn  flat color="orange"  @click="setandplay()"    slot="activator">
       play
   </v-btn>
 </div>
@@ -18,6 +18,7 @@ export default {
   data () {
     return {
       id:this.video.id.videoId,
+      autoplay: 1
     }
   },
   computed: {
@@ -27,8 +28,7 @@ export default {
   },
   methods:{
     setandplay (){
-        console.log(this.id)
-         this.$store.dispatch('player/play',this.id)
+        this.$store.dispatch('player/play',{video:this.video,autoplay:this.autoplay})
     }
   }
   

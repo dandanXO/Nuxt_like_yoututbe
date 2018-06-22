@@ -94,12 +94,12 @@
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
        <no-ssr  placeholder="Loading...">
-             <youtube  @ready="ready" :player-vars="{ autoplay: 1 }" :player-width="100" :player-height="100" :video-id="playId" />
+          <youtube  @ready="ready" @ended="ended"  @playing="playing" @paused="paused" :player-vars="{ autoplay: autoplay }" :player-width="0.1" :player-height="0.1" :video-id="playId" />
        </no-ssr>
-  
       <v-btn @click="play">play</v-btn>
       <v-btn @click="pause">pause</v-btn>
-      <span>&copy; 2017</span>
+      <span class="display-2">Now {{status}} </span> 
+      {{getvideotitle}}
     </v-footer>
   </v-app>
 </template>
@@ -122,29 +122,50 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Like Youtubes'
+        title: 'Like Youtubes',
+        status: 'playing'
       }
     },
     computed:{
-    getlist () { 
-      return  this.$store.getters['list/getlists'] 
-      } ,
-    playId(){
-      return  this.$store.getters['player/play'] 
-    }
+      getlist () { 
+        return  this.$store.getters['list/getlists'] 
+        } ,
+      playId(){ 
+        return  this.$store.getters['player/playId'] 
+      },
+      autoplay() {
+        return this.$store.getters['player/autoplay'] 
+      },
+      getvideotitle(){
+        return this.$store.getters['player/getvideotitle'] 
+      }
+      
     },
     created: function() {
       this.$store.dispatch('list/setlists') 
+    },
+    mounted: function(player){
+      this.player = player
     },
     methods:{
       ready (player) {
         this.player = player
       },
-      play (player) {
+      playing(palyer){
+        this.status='playing'
+        console.log('playing')
+      },
+      ended(player){
+        console.log('endddddd')
+      },
+      paused(player){
+        this.status='pause'
+      },
+      play () {
         this.player.playVideo()
       },
       pause () {
-       this.player.pauseVideo()
+        this.player.pauseVideo()
       }
     }
   }
