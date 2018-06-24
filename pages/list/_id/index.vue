@@ -1,7 +1,7 @@
 <template>
   <v-container align-content>
-
-         <v-data-table
+        <v-btn  color="green" @click.stop="playlist">play list</v-btn>
+        <v-data-table
             :headers="headers"
             :items="songs"
             :disable-initial-sort="disableinitialsort"
@@ -9,7 +9,6 @@
             prev-icon="mdi-menu-left"
             next-icon="mdi-menu-right"
             sort-icon="mdi-menu-down"
-            
         >
             <template slot="items" slot-scope="props">
             <td  class="text-xs-left">{{ props.item.title }}</td>
@@ -31,7 +30,7 @@ export default{
                     listname:context.params.id
                 }
             })
-    console.log({data}.data.songs)
+   // console.log({data}.data.songs[0].id)
     return {  songs: {data}.data.songs}
   },
   data () {
@@ -41,6 +40,11 @@ export default{
               {text:'title',value:'title',sortable: false,},
               {text:'id',value:'id'}
             ]
+      }
+  },
+  methods: {
+      playlist () {
+        this.$store.dispatch('player/playlist',{songs:this.songs,songsorder:0})
       }
   }
 }

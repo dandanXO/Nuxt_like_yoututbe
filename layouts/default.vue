@@ -94,18 +94,18 @@
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
        <no-ssr  placeholder="Loading...">
-          <youtube  @ready="ready" @ended="ended"  @playing="playing" @paused="paused" :player-vars="{ autoplay: autoplay }" :player-width="0.1" :player-height="0.1" :video-id="playId" />
+          <youtube  @ready="ready" @ended="ended"  @playing="playing" @paused="paused" :player-vars="{ autoplay: autoplay }" :player-width="1" :player-height="1" :video-id="playId" />
        </no-ssr>
       <v-btn @click="play">play</v-btn>
       <v-btn @click="pause">pause</v-btn>
       <span class="display-2">Now {{status}} </span> 
-      {{getvideotitle}}
+      {{ getvideotitle}}
     </v-footer>
   </v-app>
 </template>
 
 <script>
- 
+  
   export default {
     components:{
       
@@ -123,7 +123,8 @@
         right: true,
         rightDrawer: false,
         title: 'Like Youtubes',
-        status: 'playing'
+        status: 'playing',
+        songsorder: this.$store.getters['player/playlist'].songsorder
       }
     },
     computed:{
@@ -138,6 +139,12 @@
       },
       getvideotitle(){
         return this.$store.getters['player/getvideotitle'] 
+      },
+      playlistsongsorder() {
+        return this.$store.getters['player/playlist'].songsorder
+      },
+      playlist() {
+        return this.$store.getters['player/playlist'].playlist
       }
       
     },
@@ -156,7 +163,18 @@
         console.log('playing')
       },
       ended(player){
-        console.log('endddddd')
+       
+        this.songsorder = this.songsorder +1
+        if(this.playlist.length ==  this.songsorder){
+            console.log('end of list')
+            this.songsorder = 0
+        }
+        
+        if(this.playlist != ''){
+          this.$store.dispatch('player/playlist',{songs:this.playlist,songsorder:this.songsorder})
+        }else{
+           console.log('song is end ')
+        }
       },
       paused(player){
         this.status='pause'

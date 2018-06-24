@@ -10,7 +10,7 @@ router.post('/addlist', (req, res, next) => {
     const list  = admin.firestore().collection(listname).doc()
     list.set({
     id:'',
-    title:''
+    title:'this white'
     })
     .then(ress=>{
         //console.log(res)
@@ -33,7 +33,14 @@ router.post('/addsongtolist', (req, res, next) => {
     const choselistname = req.body.choselistname
     const title = req.body.title
     const id = req.body.id
-    console.log(choselistname)
+   // console.log(choselistname)
+    const a = admin.firestore().collection(choselistname).where('id', '==', '').get()
+    .then(ress=>{
+        ress.forEach(doc =>{
+           doc.ref.delete()
+        })
+        
+    })
     const list  = admin.firestore().collection(choselistname).doc()
     list.set({
     id: id,
