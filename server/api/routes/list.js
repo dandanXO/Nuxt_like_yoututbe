@@ -63,6 +63,30 @@ router.post('/addsongtolist', (req, res, next) => {
     
 })
 
+router.delete('/deletesongonlist',(req,res,next) => {
+    const listname = req.body.listname
+    const Id =  req.body.id
+    console.log(listname+'  '+Id)
+    const del = admin.firestore().collection(listname).where('id', '==', Id).get()
+    .then(ress=>{
+        ress.forEach(doc =>{
+           doc.ref.delete()
+        })
+        res.status(200).json({
+            succuess: true,
+            'message':'deletesongonlist succuess'
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            succuess: false,
+            message:'deletesongonlist smoething wrong.'
+        })
+    })
+    
+})
+
 router.get('/getlists', (req, res, next) => {
     const lists  = admin.firestore()
     lists.getCollections()

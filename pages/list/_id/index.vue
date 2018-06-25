@@ -13,6 +13,7 @@
             <template slot="items" slot-scope="props">
             <td  class="text-xs-left">{{ props.item.title }}</td>
             <td class="text-xs-right">{{ props.item.id }}</td>
+            <deletesongonlist :songId="props.item.id"></deletesongonlist>
             </template>
         </v-data-table>
     </v-container>
@@ -20,8 +21,12 @@
 
 <script>
 import axios from 'axios'
+import deletesongonlist from '~/components/deletesongonlist.vue'
 
 export default{
+    components:{
+        deletesongonlist
+    },
     async asyncData (context) {
     let {data} = await axios.get(process.env.API_URL+'list/getlistsongs',{
                 headers: {

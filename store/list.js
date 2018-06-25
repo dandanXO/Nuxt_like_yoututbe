@@ -31,6 +31,25 @@ export const actions = {
             commit('setloading',false)
         })
     },
+    deletesongonlist({commit,dispatch},payload){
+        commit('setloading',true)
+        axios.delete(process.env.API_URL+'list/deletesongonlist',{
+            data:{
+                id: payload.songId,
+                listname: payload.listname,
+            }
+            
+        })
+        .then((respo) => {
+            //console.log(payload.songId + payload.listname)
+             
+            commit('setloading',false)
+        })
+        .catch(e =>{
+            console.log(e)
+            commit('setloading',false)
+        })
+    },
     setlists ({commit}) {
         axios.get(process.env.API_URL+'list/getlists')
             .then((respo) => {
