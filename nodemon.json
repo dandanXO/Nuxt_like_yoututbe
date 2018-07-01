@@ -1,6 +1,6 @@
 {
     "env":{
-        "HOST":"127.0.0.1",
+        "HOST":"dandan.tw",
         "PORT":"3000"
     }
 }

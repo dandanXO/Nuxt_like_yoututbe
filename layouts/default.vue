@@ -93,9 +93,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-       <no-ssr  placeholder="Loading...">
-          <youtube  @ready="ready" @ended="ended"  @playing="playing" @paused="paused" :player-vars="{ autoplay: autoplay }" :player-width="1" :player-height="1" :video-id="playId" />
-       </no-ssr>
+      <no-ssr  placeholder="Loading...">
+        <youtube  @ready="ready" @ended="ended"  @playing="playing" @paused="paused" :player-vars="{ autoplay: autoplay }" :player-width="1" :player-height="1" :video-id="playId" />
+      </no-ssr>
+      <player_setting :playlist="playlist"></player_setting>
       <v-btn @click="play">play</v-btn>
       <v-btn @click="pause">pause</v-btn>
       <span class="display-2">Now {{status}} </span> 
@@ -105,10 +106,11 @@
 </template>
 
 <script>
-  
+  import player_setting from '~/components/playersetting.vue'
+
   export default {
     components:{
-      
+      player_setting
     },
     data() {
       return {

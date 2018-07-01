@@ -24,7 +24,7 @@ module.exports = {
   ** Customize the env props
   */
   env: {
-    API_URL:  'http://localhost:3000/api/'
+    API_URL:  'http://dandan.tw:3000/api/'
   },
   /*
   ** Customize the progress-bar color

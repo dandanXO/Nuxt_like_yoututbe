@@ -41,7 +41,7 @@ export const mutations = {
         state.autoplay = payload.autoplay
     },
     playlist(state,payload){
-        console.log('payload.songs[payload.songsorder].title')
+        //console.log('payload.songs[payload.songsorder].title')
         state.playlist = payload.songs
         state.playId = payload.songs[payload.songsorder].id
         state.videotitle = payload.songs[payload.songsorder].title
