@@ -29,6 +29,7 @@ export default {
   methods:{
     setandplay (){
         this.$store.dispatch('player/play',{video:this.video,autoplay:this.autoplay})
+  
     }
   }
   

@@ -34,12 +34,7 @@
       >
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
       </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>web</v-icon>
-      </v-btn>
+      
       <v-btn
         icon
         @click.stop="fixed = !fixed"
@@ -97,8 +92,23 @@
         <youtube  @ready="ready" @ended="ended"  @playing="playing" @paused="paused" :player-vars="{ autoplay: autoplay }" :player-width="1" :player-height="1" :video-id="playId" />
       </no-ssr>
       <player_setting :playlist="playlist"></player_setting>
-      <v-btn @click="play">play</v-btn>
-      <v-btn @click="pause">pause</v-btn>
+      
+      <v-btn @click="previousSong" color="blue" dark>
+        previous
+        <v-icon dark right>skip_previous</v-icon>
+      </v-btn>
+      <v-btn @click="play"  dark>
+        play
+        <v-icon>play_arrow</v-icon>
+      </v-btn>
+      <v-btn @click="pause" dark>
+        pause
+        <v-icon>pause</v-icon>  
+      </v-btn>
+      <v-btn @click="nextSong"  color="blue" dark>
+        next
+        <v-icon>skip_next</v-icon>
+      </v-btn>
       <span class="display-2">Now {{status}} </span> 
       {{ getvideotitle}}
     </v-footer>
@@ -114,7 +124,7 @@
     },
     data() {
       return {
-        clipped: false,
+        clipped: true,
         drawer: true,
         fixed: true,
         items: [
@@ -186,6 +196,33 @@
       },
       pause () {
         this.player.pauseVideo()
+      },
+      nextSong(){
+        this.songsorder = this.songsorder +1
+        if(this.playlist.length ==  this.songsorder){
+            //console.log('end of list')
+            this.songsorder = 0
+        }
+        
+        if(this.playlist != ''){
+          this.$store.dispatch('player/playlist',{songs:this.playlist,songsorder:this.songsorder})
+        }else{
+          //console.log('song is end ')
+        }
+      },
+      previousSong(){
+        this.songsorder = this.songsorder - 1
+        console.log(this.songsorder)
+        if(-1 ==  this.songsorder){
+            //console.log('start of list')
+            this.songsorder = this.playlist.length-1
+        }
+        
+        if(this.playlist != ''){
+          this.$store.dispatch('player/playlist',{songs:this.playlist,songsorder:this.songsorder})
+        }else{
+           console.log('song is end ')
+        }
       }
     }
   }
