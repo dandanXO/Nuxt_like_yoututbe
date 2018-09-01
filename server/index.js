@@ -10,11 +10,22 @@ const cookieParser = require('cookie-parser')
 console.log( process.env + '  '+ process.env.PORT)
 //Config
 const firebase_config = require('./config/firebase_config')
+const firebase = require("firebase")
+const firebaseconfig = {
+  apiKey: "AIzaSyAIf-_a1OQrmblm06l5sN-Rxaxo_HjiXD0",
+  authDomain: "like--project.firebaseapp.com",
+  databaseURL: "https://like--project.firebaseio.com",
+  projectId: "like-youtube-project",
+  storageBucket: "like-youtube-project.appspot.com",
+  messagingSenderId: "1025349820634"
+}
+firebase.initializeApp(firebaseconfig);
 
 //routes
 const dashboard = require('./api/routes/dashboard')
 const search = require('./api/routes/search')
 const list = require('./api/routes/list')
+const auth = require('./api/routes/auth')
 
 app.set('port', port)
 
@@ -51,6 +62,7 @@ app.use(session({
 app.use('/api/dashboard',dashboard)
 app.use('/api/search',search)
 app.use('/api/list',list)
+app.use('/api/auth',auth)
 
 // // errro control
 // app.use((req, res, next)=>{
