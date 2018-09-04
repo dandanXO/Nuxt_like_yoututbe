@@ -38,13 +38,14 @@
                                         id="confirmpassword"
                                         type="password"
                                         v-model="confirmPassword"
-                                        v-bind:rules="[comparePasswords]">
+                                        v-bind:rules="[comparePasswords,SignupBtn]"
+                                        >
                                         </v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-layout row>
                                     <v-flex xs12> 
-                                        <v-btn type="submit">Sign Up</v-btn>
+                                        <v-btn type="submit" v-bind:disabled="comparePasswords == 'Password do not match!'">Sign Up</v-btn>
                                     </v-flex>
                                 </v-layout>
                             </form>
@@ -57,21 +58,32 @@
 </template>
 
 <script>
+//import
+import axios from 'axios'
+
 export default {
     data(){
         return{
             email:'',
             password:'',
-            confirmPassword:''
+            confirmPassword:'',
+            SignupBtn: true
         }
     },
     computed:{
         comparePasswords () {
-            return this.password !== this.confirmPassword ? 'Password do not match!':"password match"
+            if(this.password !== this.confirmPassword ){
+                return  'Password do not match!'
+            }else{
+               
+                return ''
+            }
+            
         }
     },
     methed:{
         onSigninup(){
+             
             
         }
     }
