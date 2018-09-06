@@ -14,7 +14,7 @@ router.post('/signUp', (req, res, next) => {
     })
     .then((userRecord) =>{
         console.log("Successfully created new user:", userRecord.uid)
-        res.status(200).json({message:'successful signup!',signupStatus: true})
+        res.status(200).json({message:'successful sign Up!',signupStatus: true})
     })
     .catch(function(error) {
         console.log("Error creating new user:", error);

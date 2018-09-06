@@ -44,10 +44,11 @@
                                     </v-flex>
                                 </v-layout>
                                 <v-layout row>
-                                    <v-flex xs12> 
-                                        <v-btn type="submit" v-bind:disabled="comparePasswords == 'Password do not match!'">Sign Up</v-btn>
+                                    <v-flex xs12 > 
+                                        <v-btn   @click.stop="onSignUp" v-bind:disabled="comparePasswords == 'Password do not match!'">Sign Up</v-btn>
                                     </v-flex>
                                 </v-layout>
+                                 {{getUserMessages.message}}
                             </form>
                         </v-container>
                     </v-card-text>
@@ -58,8 +59,7 @@
 </template>
 
 <script>
-//import
-import axios from 'axios'
+
 
 export default {
     data(){
@@ -79,13 +79,27 @@ export default {
                 return ''
             }
             
+        },
+        getUserMessages () {
+            return  this.$store.getters['users/getUserMessages']
         }
     },
-    methed:{
-        onSigninup(){
-             
-            
+     watch: {
+      getUserMessages (value) {
+          console.log(value.signupStatus)
+        if (value.signupStatus) {
+          this.$router.push('/')
+        }else{
+            this.password = ''
+            this.confirmPassword= ''
         }
+      }
+    },
+    methods:{
+        onSignUp(){
+             this.$store.dispatch('users/signup',{email:this.email,password:this.password}) 
+        }
+        
     }
 }
 </script>

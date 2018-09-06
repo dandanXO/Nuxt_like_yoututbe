@@ -57,9 +57,7 @@ export default {
       
     },
     methed:{
-        onSigninup(){
-            
-        }
+       
     }
 }
 </script>
