@@ -5,11 +5,11 @@ const admin = require('firebase-admin')
 const firebase = require('firebase')
 router.post('/signUp', (req, res, next) => {
     const email = req.body.email
-    const password = req.bodtpassword
+    const password = req.body.password
 
     admin.auth().createUser({
         email: email,
-        emailVerified: false,
+       
         password: password,
     })
     .then((userRecord) =>{
@@ -22,26 +22,27 @@ router.post('/signUp', (req, res, next) => {
     })
 })
 
-router.post('/signIn', (req, res, next) => {
+router.post('/signIn',islogin,(req, res, next) => {
     const email = req.body.email
     const password = req.body.password
-
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() =>{
-        
-        console.log('sing in successful')
-        res.status(200).json({message:'successful signin!',signinStatus: true})
-    })
-    .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log('sing in failed!')
-        res.status(200).json({message:error.message,signinStatus: false})
-    })
+            .then((user) =>{
+                
+                console.log('sing in successful   '+user)
+                res.status(200).json({message:'successful signin!',signinStatus: true})
+                return
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log('sing in failed! '+error)
+                res.status(200).json({message:error.message,signinStatus: false})
+            })
+    
 })
 
-router.post('/signOut', (req, res, next) => {
+router.get('/signOut', (req, res, next) => {
 
 
     firebase.auth().signOut()
@@ -54,10 +55,19 @@ router.post('/signOut', (req, res, next) => {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log('sing in failed!')
+        console.log('sing out failed!')
         res.status(200).json({message:error.message,signoutStatus: false})
     })
 })
-
+function islogin(req,res,next){
+    const user = firebase.auth().currentUser;
+    if(user!== null){
+        console.log('sign in already')
+        res.status(200).json({message:' signin already',signinStatus: true})
+        res.end()
+    }else{
+        next();
+    }
+}
 
 module.exports = router

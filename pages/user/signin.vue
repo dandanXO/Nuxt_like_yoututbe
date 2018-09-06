@@ -32,7 +32,7 @@
                                 </v-layout>
                                 <v-layout row>
                                     <v-flex xs12> 
-                                        <v-btn type="submit">Sign In</v-btn>
+                                        <v-btn @click.stop="onSignIn">Sign In</v-btn>
                                     </v-flex>
                                 </v-layout>
                             </form>
@@ -49,15 +49,16 @@ export default {
     data(){
         return{
             email:'',
-            password:'',
-            confirmPassword:''
+            password:''
         }
     },
     computed:{
       
     },
-    methed:{
-       
+    methods:{
+        onSignIn(){
+             this.$store.dispatch('users/signIn',{email:this.email,password:this.password}) 
+        }
     }
 }
 </script>
