@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
-    user:null,
+    
     userMessages:''
 })
 export const getters = {
@@ -17,11 +17,11 @@ export const actions = {
             
         })
         .then((respo) => {
-            console.log(respo)
+            
             commit('setUserMessages',respo)
         })
         .catch((err) => {
-            console.log(err.message)
+            
             commit('setUserMessages',respo)
         })
     },
@@ -32,12 +32,24 @@ export const actions = {
             
         })
         .then((respo) => {
-            console.log(respo)
+           // console.log(respo)
+           // commit('index/SET_USER',respo.data.user)
             commit('setUserMessages',respo)
         })
         .catch((err) => {
             console.log(err.message)
             commit('setUserMessages',respo)
+        })
+    },
+    onLogout ({commit},payload){
+        axios.get(process.env.API_URL+'auth/signout',{
+        })
+        .then((respo) => {
+            commit('index/SET_USER',respo.user)
+        })
+        .catch((err) => {
+            console.log(err.message)
+            
         })
     }
 }

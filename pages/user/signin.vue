@@ -35,6 +35,8 @@
                                         <v-btn @click.stop="onSignIn">Sign In</v-btn>
                                     </v-flex>
                                 </v-layout>
+                                 {{getUserMessages.message}}
+                                    
                             </form>
                         </v-container>
                     </v-card-text>
@@ -53,12 +55,33 @@ export default {
         }
     },
     computed:{
-      
+        getUserMessages () {
+            return  this.$store.getters['users/getUserMessages']
+        },
+        user () {
+            return this.$store.getters.getUserData
+        },
     },
     methods:{
         onSignIn(){
              this.$store.dispatch('users/signIn',{email:this.email,password:this.password}) 
         }
+    },
+    fetch ({ store, redirect }){
+        if (store.state.user) {
+            return redirect('/')
+        }
+    },
+     watch: {
+      getUserMessages (value) {
+          console.log(value.signinStatus)
+        if (value.signinStatus) {
+          this.$router.go('/')
+        }else{
+            this.password = ''
+            this.confirmPassword= ''
+        }
+      }
     }
 }
 </script>

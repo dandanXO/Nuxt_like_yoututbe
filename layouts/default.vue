@@ -72,6 +72,38 @@
       <v-list>
         <v-list-tile
           router
+          :to="'/user/signin'"
+        >
+          <v-list-tile-action>
+            <v-icon v-html="'arrow_right_alt'"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Sign In</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+          router
+          :to="'/user/signup'"
+        >
+          <v-list-tile-action>
+            <v-icon v-html="'perm_contact_calendar'"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Sign Up</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+        @click="onLogout"
+        >
+          <v-list-tile-action>
+            <v-icon v-html="'perm_contact_calendar'"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Sign out</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+          router
           :to="'/list/'+list"
           :key="i"
           v-for="(list, i) in getlist"
@@ -167,6 +199,9 @@
       this.player = player
     },
     methods:{
+      onLogout () {
+        this.$store.dispatch('users/logout') 
+      },
       ready (player) {
         this.player = player
       },

@@ -26,10 +26,11 @@ router.post('/signIn',islogin,(req, res, next) => {
     const email = req.body.email
     const password = req.body.password
     firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((user) =>{
-                
-                console.log('sing in successful   '+user)
-                res.status(200).json({message:'successful signin!',signinStatus: true})
+            .then((users) =>{
+                const user = firebase.auth().currentUser;
+            
+                console.log('sing in successful   '+users)
+                res.status(200).json({message:'successful signin!',signinStatus: true,user:user})
                 return
             })
             .catch(function(error) {
@@ -47,9 +48,8 @@ router.get('/signOut', (req, res, next) => {
 
     firebase.auth().signOut()
     .then(() =>{
-        
         console.log('sing out successful')
-        res.status(200).json({message:'successful sign out!',signoutStatus: true})
+        res.status(200).json({message:'successful sign out!',signoutStatus: true,user:null})
     })
     .catch(function(error) {
         // Handle Errors here.
@@ -63,7 +63,7 @@ function islogin(req,res,next){
     const user = firebase.auth().currentUser;
     if(user!== null){
         console.log('sign in already')
-        res.status(200).json({message:' signin already',signinStatus: true})
+        res.status(200).json({message:' signin already',signinStatus: true,user:user})
         res.end()
     }else{
         next();
