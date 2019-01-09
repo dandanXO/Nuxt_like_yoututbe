@@ -4,7 +4,7 @@
 
 
 ## Preview
- URL [Here](https://nuxtjs.org).
+ URL [Here](https://dandan.tw).
 ## Build Setup
 
 ``` bash
