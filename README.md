@@ -4,7 +4,7 @@
 
 
 ## Preview
- URL [Here](https://dandan.tw).
+ URL [Here](http://dandan.tw).
 ## Build Setup
 
 ``` bash
