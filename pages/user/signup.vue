@@ -84,11 +84,17 @@ export default {
             return  this.$store.getters['users/getUserMessages']
         }
     },
+    fetch ({ store, redirect }){
+        console.log(store.state)
+        if (store.state.users.userMessages.signinStatus) {
+            return redirect('/')
+        }
+    },
      watch: {
       getUserMessages (value) {
-          console.log(value.signupStatus)
-        if (value.signupStatus) {
-          this.$router.push('/')
+        console.log(value)
+        if (value.signinStatus) {
+          this.$router.go('/')
         }else{
             this.password = ''
             this.confirmPassword= ''

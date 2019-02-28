@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
         })
         .catch(function (err) {
             // API call failed...
-            console.log(err)
+            console.log(err +'      ssd')
         })
 })
 

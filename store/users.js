@@ -17,7 +17,7 @@ export const actions = {
             
         })
         .then((respo) => {
-            
+            console.log('res',respo.data)
             commit('setUserMessages',respo)
         })
         .catch((err) => {
@@ -41,11 +41,12 @@ export const actions = {
             commit('setUserMessages',respo)
         })
     },
-    onLogout ({commit},payload){
+    logout ({commit},payload){
         axios.get(process.env.API_URL+'auth/signout',{
         })
         .then((respo) => {
-            commit('index/SET_USER',respo.user)
+            console.log('respo',respo.data)
+            commit('setUserMessages',respo)
         })
         .catch((err) => {
             console.log(err.message)

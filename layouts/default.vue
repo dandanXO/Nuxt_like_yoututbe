@@ -70,7 +70,7 @@
         </v-list-tile>
       </v-list>
       <v-list>
-        <v-list-tile
+        <v-list-tile v-if="!isLogin"
           router
           :to="'/user/signin'"
         >
@@ -81,7 +81,7 @@
             <v-list-tile-title>Sign In</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile
+        <v-list-tile v-if="!isLogin"
           router
           :to="'/user/signup'"
         >
@@ -92,7 +92,7 @@
             <v-list-tile-title>Sign Up</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile
+        <v-list-tile v-if="isLogin"
         @click="onLogout"
         >
           <v-list-tile-action>
@@ -172,6 +172,9 @@
       }
     },
     computed:{
+      isLogin(){
+        return this.$store.getters['users/getUserMessages'].signinStatus
+      },
       getlist () { 
         return  this.$store.getters['list/getlists'] 
         } ,
@@ -201,6 +204,7 @@
     methods:{
       onLogout () {
         this.$store.dispatch('users/logout') 
+        this.$router.push('/');
       },
       ready (player) {
         this.player = player

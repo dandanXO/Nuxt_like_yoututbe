@@ -68,7 +68,7 @@ export default {
         }
     },
     fetch ({ store, redirect }){
-        if (store.state.user) {
+        if (store.state.users.userMessages.signinStatus) {
             return redirect('/')
         }
     },
