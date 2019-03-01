@@ -29,7 +29,7 @@ router.post('/signIn',islogin,(req, res, next) => {
             .then((users) =>{
                 const user = firebase.auth().currentUser;
             
-                console.log('sing in successful   ',users)
+                //console.log('sing in successful   ',users)
                 res.status(200).json({message:'successful signin!',signinStatus: true,user:user})
                 return
             })

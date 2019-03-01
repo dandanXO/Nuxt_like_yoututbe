@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-btn  flat color="orange" @click.native.stop="addtolist = true" @click="setlists()"  slot="activator">
+  <v-btn  flat color="orange" v-if="getUserMessage" @click.native.stop="addtolist = true" @click="setlists()"  slot="activator">
       add to list
   </v-btn>
   <v-dialog v-model="addtolist"   max-width="500px">
@@ -61,7 +61,8 @@ export default {
   },
   computed: {
     getlist () { 
-      return  this.$store.getters['list/getlists'] 
+      if(this.$store.getters['users/getUserMessages'].signinStatus){
+        return  this.$store.getters['list/getlists']}
     },
     listnameIsValid () {
       return this.listname !==''
@@ -86,7 +87,7 @@ export default {
       this.$store.dispatch('list/setlists')
     },
     createlist(){
-      this.$store.dispatch('list/createlist',this.listname)
+      this.$store.dispatch('list/createlist',{listName:this.listname,Uid:this.$store.getters['users/getUserMessages'].user.uid})
     }
   }
   

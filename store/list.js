@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
-    lists:["li1","li2"],
+    lists:[],
     loading: false
 })
 
@@ -15,9 +15,10 @@ export const getters = {
 }
 
 export const actions = {
-    addsongtolist({commit,dispatch},payload){
+    addsongtolist({commit,dispatch,rootState},payload){
         commit('setloading',true)
         axios.post(process.env.API_URL+'list/addsongtolist',{
+            uid: rootState.users.userMessages.user.uid,
             title: payload.title,
             choselistname: payload.choselistname,
             id: payload.id
@@ -50,20 +51,26 @@ export const actions = {
             commit('setloading',false)
         })
     },
-    setlists ({commit}) {
-        axios.get(process.env.API_URL+'list/getlists')
-            .then((respo) => {
-                //console.log(respo.data)
-                commit('setlists',respo.data.lists)
-            })
-            .catch(e =>{
-                console.log(e)
-            })
-    },
+    setlists ({commit,rootState }) {
+       // console.log(rootState.users.uid)
+        axios.get(process.env.API_URL+'list/getlists',{
+            params: {
+                uid: rootState.users.userMessages.user.uid
+            }
+        })
+        .then((respo) => {
+            //console.log(respo.data)
+            commit('setlists',respo.data.lists)
+        })
+        .catch(e =>{
+            console.log(e)
+        })
+},
     createlist({commit,dispatch},payload){
         //console.log(payload)
         axios.post(process.env.API_URL+'list/addlist',{
-                listname: payload
+                listname: payload.listName,
+                uid:payload.Uid
             })
             .then(res =>{
                 dispatch('setlists')

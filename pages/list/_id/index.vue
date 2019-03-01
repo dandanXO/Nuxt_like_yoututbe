@@ -28,15 +28,22 @@ export default{
         deletesongonlist
     },
     async asyncData (context) {
-    let {data} = await axios.get(process.env.API_URL+'list/getlistsongs',{
+        if(context.store.getters['users/getUserMessages'].signinStatus){
+            //console.log(context.store.state.users.userMessages.user.uid)
+            let {data} = await axios.get(process.env.API_URL+'list/getlistsongs',{
                 headers: {
                 },
                 params: {
-                    listname:context.params.id
+                    listname:context.params.id,
+                    uid: context.store.state.users.userMessages.user.uid
                 }
             })
-   // console.log({data}.data.songs[0].id)
-    return {  songs: {data}.data.songs}
+             console.log({data}.data)
+  
+            return {  songs: {data}.data.songs}
+        }
+   // console.log({data}.data)
+  
   },
   data () {
       return {

@@ -47,6 +47,7 @@ export const actions = {
         .then((respo) => {
             console.log('respo',respo.data)
             commit('setUserMessages',respo)
+            commit('list/setlists',[],{ root: true })
         })
         .catch((err) => {
             console.log(err.message)
@@ -60,7 +61,8 @@ export const mutations = {
     setUserMessages (state,payload ) {
         // change state
         state.userMessages = payload.data
-    }
+    },
+    
 }
     
 

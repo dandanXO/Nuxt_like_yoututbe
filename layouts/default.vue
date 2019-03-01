@@ -196,7 +196,9 @@
       
     },
     created: function() {
-      this.$store.dispatch('list/setlists') 
+      if(this.$store.getters['users/getUserMessages'].signinStatus){
+        this.$store.dispatch('list/setlists')
+      }
     },
     mounted: function(player){
       this.player = player

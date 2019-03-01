@@ -58,7 +58,9 @@ export default {
   async asyncData ({store}) {
     let {data} = await axios.get( process.env.API_URL+'dashboard')
     //console.log({data})
-    store.dispatch('list/setlists')
+    if(store.getters['users/getUserMessages'].signinStatus){
+      store.dispatch('list/setlists')
+   }
     return {  reults: {data}.data[1] }
   }
   

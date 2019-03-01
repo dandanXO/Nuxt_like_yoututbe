@@ -6,17 +6,16 @@ const admin = require('firebase-admin');
 router.post('/addlist', (req, res, next) => {
     //const id = req.query.id
     const listname = req.body.listname
+    const uid = req.body.uid
     console.log(listname)
-    const list  = admin.firestore().collection(listname).doc()
-    list.set({
-    id:'',
-    title:'this white'
+    const UidList  = admin.firestore().collection(uid).doc('lists').collection(listname).doc()
+    UidList.set({
     })
     .then(ress=>{
         //console.log(res)
         res.status(201).json({
             succuess: true,
-            message:'add'+list
+            message:'add'+UidList
         })
     })
     .catch(err => {
@@ -30,6 +29,7 @@ router.post('/addlist', (req, res, next) => {
 
 router.post('/addsongtolist', (req, res, next) => {
     //const id = req.query.id
+    const uid = req.body.uid
     const choselistname = req.body.choselistname
     const title = req.body.title
     const id = req.body.id
@@ -41,7 +41,7 @@ router.post('/addsongtolist', (req, res, next) => {
         })
         
     })
-    const list  = admin.firestore().collection(choselistname).doc()
+    const list  = admin.firestore().collection(uid).doc('lists').collection(choselistname).doc()
     list.set({
     id: id,
     title: title
@@ -88,7 +88,8 @@ router.delete('/deletesongonlist',(req,res,next) => {
 })
 
 router.get('/getlists', (req, res, next) => {
-    const lists  = admin.firestore()
+    const uid = req.query.uid
+    const lists  = admin.firestore().collection(uid).doc('lists')
     lists.getCollections()
     .then(getCollections => {
         const collectionArray = []
@@ -110,8 +111,9 @@ router.get('/getlists', (req, res, next) => {
 })
 router.get('/getlistsongs', (req, res, next) => {
     const listNmae = req.query.listname
+    const uid = req.query.uid
     const songs =[]
-    const listRef = admin.firestore().collection(listNmae)
+    const listRef = admin.firestore().collection(uid).doc('lists').collection(listNmae)
     listRef.get()
     .then(snapshot => {
         snapshot.forEach(doc => {
