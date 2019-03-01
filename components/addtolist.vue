@@ -14,7 +14,7 @@
                 List Name : {{listname}}
               </v-flex>
               <v-flex  xs4  justify-space-between>
-                <v-btn color="blue"   @click="createlist()"  :disabled="!listnameIsValid">create</v-btn>
+                <v-btn color="blue"   @click="createlist()"  :disabled="!listnameIsValid||!getUserMessage">create</v-btn>
               </v-flex>
               <v-flex xs12>
                 <v-select 
@@ -28,7 +28,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat="flat"  @click="addSongTolist" @click.native="alertshow=true"  :loading="loading" :disabled="loading||!choselistnameIsValid"  >add</v-btn>
+            <v-btn color="green darken-1" flat="flat"  @click="addSongTolist" @click.native="alertshow=true"  :loading="loading" :disabled="!getUserMessage||loading||!choselistnameIsValid"  >add</v-btn>
             <v-btn color="red darken-1" flat="flat" @click.native="addtolist = false" >cancel</v-btn>
           </v-card-actions>
           <alert v-show="alertshow" :message="'test message'" :success="true"></alert>
@@ -71,7 +71,11 @@ export default {
     },
     loading () {
       return  this.$store.getters['list/getloading'] 
+    },
+    getUserMessage(){
+       return  this.$store.getters['users/getUserMessages'].signinStatus
     }
+    
   },
   methods:{
     addSongTolist(){
