@@ -26,6 +26,7 @@ import deletesongonlist from '~/components/deletesongonlist.vue'
 export default{
     components:{
         deletesongonlist
+        
     },
     async asyncData (context) {
         if(context.store.getters['users/getUserMessages'].signinStatus){
