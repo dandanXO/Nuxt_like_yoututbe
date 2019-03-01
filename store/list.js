@@ -32,10 +32,11 @@ export const actions = {
             commit('setloading',false)
         })
     },
-    deletesongonlist({commit,dispatch},payload){
+    deletesongonlist({commit,dispatch,rootState},payload){
         commit('setloading',true)
         axios.delete(process.env.API_URL+'list/deletesongonlist',{
             data:{
+                uid: rootState.users.userMessages.user.uid,
                 id: payload.songId,
                 listname: payload.listname,
             }
