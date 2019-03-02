@@ -3,6 +3,7 @@ const router = express.Router()
 const rp = require('request-promise')
 const admin = require('firebase-admin')
 const firebase = require('firebase')
+
 router.post('/signUp',islogin, (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
@@ -43,9 +44,24 @@ router.post('/signIn',islogin,(req, res, next) => {
     
 })
 
+router.post('/otherSinginCheck',(req, res, next)=>{
+    const token =req.body.token
+    console.log(token)
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedToken => {
+        const user = decodedToken
+        console.log(user)
+        res.status(200).json({message:'successful signin!',signinStatus: true,user:user})
+      })
+   
+})
+
+
+
+
 router.get('/signOut', (req, res, next) => {
-
-
     firebase.auth().signOut()
     .then(() =>{
         console.log('sing out successful')
