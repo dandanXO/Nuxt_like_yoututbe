@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const rp = require('request-promise')
+const request = require('superagent')
 const admin = require('firebase-admin')
 const firebase = require('firebase')
 router.post('/signUp',islogin, (req, res, next) => {
@@ -59,6 +59,38 @@ router.get('/signOut', (req, res, next) => {
         res.status(200).json({message:error.message,signinStatus: false})
     })
 })
+
+router.get('/githubCallback', (req, res, next) =>{
+    const {query}=req
+    const {code} = query
+    //console.log('req',req)
+    if(!code){
+        res.send({
+            success: false,
+        })
+    }
+    request
+    .post('https://github.com/login/oauth/access_token')
+    .send({ 
+        client_id: '77989c6365a88c734a5c',
+        client_secret: 'c0ef4b7e1fdfa9aee9993d48d766ee28125945e6',
+        code: code })
+    .set('Accept', 'application/json')
+    .then(result => {
+      const data = result.body
+        request
+        .get(`https://api.github.com/user`)
+        .set('Authorization', `token ${data.access_token}`)
+        .then(result => {
+            res.send(result.body)
+        });
+    });
+})
+
+
+
+
+
 function islogin(req,res,next){
     const user = firebase.auth().currentUser;
     if(user!== null){

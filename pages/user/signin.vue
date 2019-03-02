@@ -38,6 +38,11 @@
                                  {{getUserMessages.message}}
                                     
                             </form>
+                            <v-layout row>
+                                    <v-flex xs12> 
+                                        <v-btn href="http://dandan.tw/api/auth/signInWithGithub">Signin with Github</v-btn>
+                                    </v-flex>
+                                </v-layout>
                         </v-container>
                     </v-card-text>
                 </v-card>
