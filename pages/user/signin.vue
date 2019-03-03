@@ -4,7 +4,7 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <v-card-text>
-            <v-container>
+            <v-container class="text-xs-center">
               <form>
                 <v-layout row>
                   <v-flex xs12>
@@ -33,12 +33,15 @@
                   </v-flex>
                 </v-layout>
                 <v-layout row>
-                  <v-flex xs12>
+                  <v-flex xs12 >
                     <v-btn @click.stop="onSignIn">Sign In</v-btn>
                   </v-flex>
                 </v-layout>
+                <v-flex xs12>
+                  <hr class="hr-text" data-content="OR">
+                </v-flex>
                 <v-layout row>
-                  <v-flex xs6>
+                  <v-flex xs12>
                     <v-btn @click.stop="onSignInGithub">Sign In With Github</v-btn>
                   </v-flex>
                 </v-layout>
@@ -51,6 +54,42 @@
     </v-layout>
   </v-container>
 </template>
+<style lang="scss">
+  
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+  &:before {
+    content: '';
+    // use the linear-gradient for the fading effect
+    // use a solid background color for a solid bar
+    background: linear-gradient(to right, transparent, #818078, transparent);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+
+    padding: 0 .5em;
+    line-height: 1.5em;
+    // this is really the only tricky part, you need to specify the background color of the container element...
+    color: #818078;
+    background-color: #fcfcfa;
+  }
+}
+</style>
 
 <script>
 import firebase from "firebase";
