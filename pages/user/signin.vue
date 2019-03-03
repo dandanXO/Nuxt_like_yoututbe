@@ -9,6 +9,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                    autocomplete="username"
                       name="email"
                       label="Mail"
                       id="email"
@@ -25,6 +26,7 @@
                       label="password"
                       id="password"
                       type="password"
+                      autocomplete="current-password"
                       v-model="password"
                       required
                     ></v-text-field>
@@ -35,7 +37,7 @@
                     <v-btn @click.stop="onSignIn">Sign In</v-btn>
                   </v-flex>
                   <v-flex xs12>
-                    <v-btn @click.stop="SignInGithub">Sign In With Github</v-btn>
+                    <v-btn @click.stop="onSignInGithub">Sign In With Github</v-btn>
                   </v-flex>
                 </v-layout>
                 {{getUserMessages.message}}
@@ -63,9 +65,6 @@ export default {
   computed: {
     getUserMessages() {
       return this.$store.getters["users/getUserMessages"];
-    },
-    user() {
-      return this.$store.getters.getUserData;
     }
   },
   methods: {
@@ -75,22 +74,14 @@ export default {
         password: this.password
       });
     },
-    SignInGithub() {
-      firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider());
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          return user.getIdToken().then(token => {
-            // eslint-disable-next-line no-undef
-            console.log(token);
-            return axios.post(process.env.API_URL+'auth/otherSinginCheck',{
-               token:token
-            })
-          });
-        } else {
-          this.setState({ user: null });
-          // eslint-disable-next-line no-undef
-        }
+    onSignInGithub() {
+      firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
+      .then((result)=>{
+        firebase.auth().onAuthStateChanged(user => {
+        this.$store.dispatch('users/ThirdPartyLogin',{user:user})
+      })
       });
+      
     }
   },
   fetch({ store, redirect }) {
@@ -100,7 +91,6 @@ export default {
   },
   watch: {
     getUserMessages(value) {
-      console.log(value.signinStatus);
       if (value.signinStatus) {
         this.$router.go("/");
       } else {

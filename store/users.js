@@ -1,69 +1,82 @@
 import axios from 'axios'
+import firebase from "firebase";
+// firebse is already in plugin
 
 export const state = () => ({
-    
-    userMessages:''
+
+    userMessages: ''
 })
 export const getters = {
-    getUserMessages (state) {
+    getUserMessages(state) {
         return state.userMessages
-   }
+    }
 }
 export const actions = {
-    signup ({commit},payload){
-        axios.post(process.env.API_URL+'auth/signUp',{
+    signup({ commit }, payload) {
+        axios.post(process.env.API_URL + 'auth/signUp', {
             email: payload.email,
             password: payload.password,
-            
+
         })
-        .then((respo) => {
-            console.log('res',respo.data)
-            commit('setUserMessages',respo)
-        })
-        .catch((err) => {
-            
-            commit('setUserMessages',respo)
-        })
+            .then((respo) => {
+                commit('setUserMessages', respo)
+            })
+            .catch((err) => {
+
+                commit('setUserMessages', respo)
+            })
     },
-    signIn ({commit},payload){
-        axios.post(process.env.API_URL+'auth/signin',{
+    signIn({ commit }, payload) {
+        axios.post(process.env.API_URL + 'auth/signin', {
             email: payload.email,
             password: payload.password,
-            
+
         })
-        .then((respo) => {
-           // console.log(respo)
-           // commit('index/SET_USER',respo.data.user)
-            commit('setUserMessages',respo)
-        })
-        .catch((err) => {
-            console.log(err.message)
-            commit('setUserMessages',respo)
-        })
+            .then((respo) => {
+                commit('setUserMessages', respo)
+            })
+            .catch((err) => {
+                console.log(err.message)
+                commit('setUserMessages', respo)
+            })
     },
-    logout ({commit},payload){
-        axios.get(process.env.API_URL+'auth/signout',{
+    ThirdPartyLogin({ commit }, payload) {
+        const user = payload.user
+        payload.user.getIdToken().then(token => {
+            axios.post(process.env.API_URL + 'auth/otherSinginCheck', {
+                token: token
+            })
+                .then((respo) => {
+                    commit('setUserMessages', respo)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        });
+
+    },
+    logout({ commit }, payload) {
+        axios.get(process.env.API_URL + 'auth/signout', {
         })
-        .then((respo) => {
-            console.log('respo',respo.data)
-            commit('setUserMessages',respo)
-            commit('list/setlists',[],{ root: true })
-        })
-        .catch((err) => {
-            console.log(err.message)
-            
-        })
+            .then((respo) => {
+                commit('setUserMessages', respo)
+                commit('list/setlists', [], { root: true })
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
     }
 }
 
 
 export const mutations = {
-    setUserMessages (state,payload ) {
+    setUserMessages(state, payload) {
         // change state
+        console.log()
         state.userMessages = payload.data
     },
-    
+
 }
-    
+
 
 

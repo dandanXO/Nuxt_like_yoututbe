@@ -4,10 +4,25 @@ const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 80
-const session = require('express-session')
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
+const session = require('express-session')
+// const cookieParser = require('cookie-parser')
+//const FileStore = require('session-file-store')(session)
+
+
 console.log( process.env + '  '+ process.env.PORT)
+
+//session
+
+app.use(session({
+  secret: 'super-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 60000 }
+}))
+//bodyParser
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 //Config
 const firebase_config = require('./config/firebase_config')
 const firebase = require("firebase")
@@ -33,9 +48,8 @@ app.set('port', port)
 let config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
-//bodyParser
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+
+
 
 //add header
 app.use((req,res,next)=>{
@@ -50,13 +64,6 @@ app.use((req,res,next)=>{
   next()
 })
 
-//session
-app.use(session({
-  secret: 'recommanflkdg$#%@#^@#^K@#@GLOM#@OGOEOAMGMGMGGMGMREO#@%)@#^#Y#GMewvljnstring', // 建议使用 128 个字符的随机字符串
-  cookie: { maxAge: 60 * 1000 },
-  resave: true,
-    saveUninitialized: true
-}));
 
 //Routes which should handle requests
 app.use('/api/dashboard',dashboard)

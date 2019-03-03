@@ -11,3 +11,4 @@ npm-debug.log
 dist
 # server config
 server/config
+sessions
