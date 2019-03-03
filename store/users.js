@@ -41,10 +41,10 @@ export const actions = {
             })
     },
     ThirdPartyLogin({ commit }, payload) {
-        const user = payload.user
         payload.user.getIdToken().then(token => {
             axios.post(process.env.API_URL + 'auth/otherSinginCheck', {
-                token: token
+                token: token,
+                topic:payload.topic
             })
                 .then((respo) => {
                     commit('setUserMessages', respo)

@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const rp = require('request-promise')
 const admin = require('firebase-admin')
 const firebase = require('firebase')
 
@@ -26,6 +25,7 @@ router.post('/signUp',islogin, (req, res, next) => {
 router.post('/signIn',islogin,(req, res, next) => {
     const email = req.body.email
     const password = req.body.password
+ 
     firebase.auth().signInWithEmailAndPassword(email, password)
             .then((users) =>{
                 const user = firebase.auth().currentUser;
@@ -48,7 +48,7 @@ router.post('/otherSinginCheck',(req, res, next)=>{
       .auth()
       .verifyIdToken(token)
       .then(decodedToken => {
-        req.session.auth = {topic:'github',user:decodedToken}
+        req.session.auth = {topic:req.body.topic,user:decodedToken}
         const user = decodedToken
         res.status(200).json({message:'successful signin!',signinStatus: true,user:user})
         return
@@ -83,10 +83,11 @@ router.get('/signOut', (req, res, next) => {
 })
 function islogin(req,res,next){
     const user = firebase.auth().currentUser;
-    console.log('isLogin',req.session.isVisit)
     if(user!== null){
-       
         res.status(200).json({message:' signin already',signinStatus: true,user:user})
+        res.end()
+    }else if(req.session.auth){
+        res.status(200).json({message:' signin already',signinStatus: true,user:req.session.auth.user})
         res.end()
     }else{
         next();

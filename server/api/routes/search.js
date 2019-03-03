@@ -4,7 +4,7 @@ var rp = require('request-promise')
 
 /// -> uri + '?access_token=xxxxx%20xxxxx'
 router.get('/',(req,res,next) => {
-    //console.log( req.query.q)
+    console.log(req.session.test)
     const options = {
         uri: 'https://www.googleapis.com/youtube/v3/search',
         qs: {

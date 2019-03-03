@@ -36,7 +36,9 @@
                   <v-flex xs12>
                     <v-btn @click.stop="onSignIn">Sign In</v-btn>
                   </v-flex>
-                  <v-flex xs12>
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs6>
                     <v-btn @click.stop="onSignInGithub">Sign In With Github</v-btn>
                   </v-flex>
                 </v-layout>
@@ -78,7 +80,7 @@ export default {
       firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
       .then((result)=>{
         firebase.auth().onAuthStateChanged(user => {
-        this.$store.dispatch('users/ThirdPartyLogin',{user:user})
+        this.$store.dispatch('users/ThirdPartyLogin',{topic:'github',user:user})
       })
       });
       

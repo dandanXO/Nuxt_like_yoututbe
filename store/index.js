@@ -14,12 +14,12 @@ export const actions = {
     async    nuxtServerInit({ commit, state }, { req, res }) {
         if(req.session.auth){
             const user = req.session.auth.user
-            commit('users/setUserMessages', {data:{message:'successful signin!',signinStatus: true,user:user}})
+            const topic = req.session.auth.topic
+            commit('users/setUserMessages', {data:{message:'successful signin!',signinStatus: true,user:user,topic:topic}})
         }else{
             await axios.post(process.env.API_URL + 'auth/signin', {
                 email: '',
                 password: '',
-    
             })
                 .then((respo) => {
                     commit('users/setUserMessages', respo)
@@ -28,7 +28,6 @@ export const actions = {
                     console.log(err.message)
                     commit('users/setUserMessages', respo)
                 })
-    
         }
         
     }

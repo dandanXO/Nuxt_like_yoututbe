@@ -57,6 +57,7 @@ app.use((req,res,next)=>{
   res.header('Access-Control-Allow-Headers','Origin, X-Requested-Width, Content-Type, Accept, Authorization')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+  res.header('Access-Control-Allow-Credentials', 'true')
   if(req.method==='OPSTIONS'){
       res.header('Access-Control-Allow-Mehtods','PUT, POST,PATH,DELETE,GET')
       return res.status(200).json({})
