@@ -58,6 +58,8 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
+    proxyHeaders: false,
+    credentials: false
     // See https://github.com/nuxt-community/axios-module#options
   },
 

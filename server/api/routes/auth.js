@@ -25,7 +25,6 @@ router.post('/signUp',islogin, (req, res, next) => {
 router.post('/signIn',islogin,(req, res, next) => {
     const email = req.body.email
     const password = req.body.password
- 
     firebase.auth().signInWithEmailAndPassword(email, password)
             .then((users) =>{
                 const user = firebase.auth().currentUser;
