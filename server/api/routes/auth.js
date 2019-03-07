@@ -47,7 +47,7 @@ router.post('/otherSinginCheck',(req, res, next)=>{
       .auth()
       .verifyIdToken(token)
       .then(decodedToken => {
-        req.session.auth = {topic:req.body.topic,user:decodedToken}
+        req.session.auth = {topic:req.body.topic,user:decodedToken,token:token}
         const user = decodedToken
         res.status(200).json({message:'successful signin!',signinStatus: true,user:user})
         return

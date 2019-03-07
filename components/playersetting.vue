@@ -23,9 +23,11 @@
         <v-list two-line>
           <template v-for="(song, index) in this.playlist">
             <v-list-tile :key="song.id" avatar ripple @click="toggle(index)">
+              <player :video="undefined" :videoLisSong="song"></player>
               <v-list-tile-content>
                 <v-list-tile-title>{{ song.title }}</v-list-tile-title>
                 <v-list-tile-sub-title class="text--primary">{{ song.id }}</v-list-tile-sub-title>
+                 
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-list-tile-action-text>{{ song.title }}</v-list-tile-action-text>
@@ -43,7 +45,11 @@
 
 
 <script>
+import player from '~/components/player.vue'
 export default {
+  components:{
+    player
+  },
   props: ["playlist"],
   data() {
     return {

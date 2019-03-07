@@ -8,8 +8,8 @@
             </v-flex>
                <v-flex xs12 >
              <v-toolbar>
-                <v-text-field hide-details single-line v-model="searchWords"></v-text-field>
-                <v-btn icon @click="search()">
+                <v-text-field  @keyup.enter="search()" hide-details single-line v-model="searchWords"></v-text-field>
+                <v-btn icon @click.prevent="search()">
                     <v-icon>search</v-icon>
                 </v-btn>
                 </v-toolbar>

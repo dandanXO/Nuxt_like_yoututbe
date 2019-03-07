@@ -35,7 +35,7 @@ export const actions = {
 
 export const mutations = {
     play (state,payload ) {
-        //console.log(payload)
+        console.log(payload)
         state.playId = payload.video.id.videoId 
         state.videotitle = payload.video.snippet.title 
         state.autoplay = payload.autoplay
