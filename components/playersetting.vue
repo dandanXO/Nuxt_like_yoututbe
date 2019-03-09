@@ -22,17 +22,20 @@
       <v-card>
         <v-list two-line>
           <template v-for="(song, index) in this.playlist">
-            <v-list-tile :key="song.id" avatar ripple @click="toggle(index)">
+            <v-list-tile :key="song.id" avatar ripple>
               <player :video="undefined" :videoLisSong="song"></player>
               <v-list-tile-content>
                 <v-list-tile-title>{{ song.title }}</v-list-tile-title>
                 <v-list-tile-sub-title class="text--primary">{{ song.id }}</v-list-tile-sub-title>
-                 
               </v-list-tile-content>
-              <v-list-tile-action>
+              <v-list-tile-action  @click="toggle(index)">
                 <v-list-tile-action-text>{{ song.title }}</v-list-tile-action-text>
-                <v-icon v-if="selected.indexOf(index) < 0" color="grey lighten-1"></v-icon>
-                <v-icon v-else color="yellow darken-2">star</v-icon>
+                <v-icon v-if="selected.indexOf(index) < 0" color="grey lighten-1">
+                  favorite_border
+                </v-icon>
+                <v-icon v-else color="pink lighten-2">
+                 favorite
+                </v-icon>
               </v-list-tile-action>
             </v-list-tile>
             <v-divider v-if="index + 1 < playlist.length" :key="index"></v-divider>
