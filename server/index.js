@@ -41,7 +41,7 @@ const dashboard = require('./api/routes/dashboard')
 const search = require('./api/routes/search')
 const list = require('./api/routes/list')
 const auth = require('./api/routes/auth')
-
+const song = require('./api/routes/song')
 app.set('port', port)
 
 // Import and Set Nuxt.js options
@@ -71,7 +71,7 @@ app.use('/api/dashboard',dashboard)
 app.use('/api/search',search)
 app.use('/api/list',list)
 app.use('/api/auth',auth)
-
+app.use('/api/song',song)
 // // errro control
 // app.use((req, res, next)=>{
 //   const error = new Error('Not found');

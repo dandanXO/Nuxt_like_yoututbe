@@ -19,17 +19,23 @@ export const getters = {
     return state.autoplay
    },
    playlist (state){
-    return {playlist:state.playlist,songsorder:state.songsorder}
+    return {playlist:state.playlist,songsorder:state.songsorder,playlistName:state.listName}
    }
 }
-
+let listNameTemp 
 export const actions = {
     play ({commit},payload) {
        commit('play',payload)
     },
     playlist ({commit},payload){
-       
-        commit('playlist',payload)
+        if(payload.listName){
+            listNameTemp   = payload.listName
+            commit('playlist',payload)
+           
+        }else{
+            payload.listName = listNameTemp
+            commit('playlist',payload)
+        }
     }
 }
 
@@ -47,7 +53,7 @@ export const mutations = {
         state.videotitle = payload.songs[payload.songsorder].title
         state.songsorder = payload.songsorder
         state.autoplay = 1
-       
+        state.listName = payload.listName
     }
 }
     

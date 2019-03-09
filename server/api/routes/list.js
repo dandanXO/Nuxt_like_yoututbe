@@ -7,7 +7,6 @@ router.post('/addlist', (req, res, next) => {
     //const id = req.query.id
     const listname = req.body.listname
     const uid = req.body.uid
-    console.log(listname)
     const UidList  = admin.firestore().collection(uid).doc('lists').collection(listname).doc()
     UidList.set({
         id:''
@@ -42,7 +41,7 @@ router.post('/addsongtolist', (req, res, next) => {
         })
         
     })
-    const list  = admin.firestore().collection(uid).doc('lists').collection(choselistname).doc()
+    const list  = admin.firestore().collection(uid).doc('lists').collection(choselistname).doc(id)
     list.set({
     id: id,
     title: title

@@ -13,7 +13,7 @@
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.title }}</td>
         <td class="text-xs-right">{{ props.item.id }}</td>
-        <deletesongonlist :songId="props.item.id"></deletesongonlist>
+        <deletesongonlist :songId="props.item.id" ></deletesongonlist>
       </template>
     </v-data-table>
   </v-container>
@@ -41,7 +41,6 @@ export default {
             }
           }
         );
-        console.log({ data }.data);
 
         return { songs: { data }.data.songs };
       }
@@ -61,7 +60,8 @@ export default {
     playlist() {
       this.$store.dispatch("player/playlist", {
         songs: this.songs,
-        songsorder: 0
+        songsorder: 0,
+        listName: $nuxt.$route.path.replace('/list/','')
       });
     }
   }
