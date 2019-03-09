@@ -25,7 +25,9 @@ $ npm run generate
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
 # Todo list
-- add signin and signup feature
+- ~~add song fevorite ~~
+- ~~add signin and signup feature~~
+- ~~add thrid part login (use github login)~~
 - ~~Separate store's playlit and current play list.~~
 - ~~add next song and previous song button.~~
 - ~~add song list~~
