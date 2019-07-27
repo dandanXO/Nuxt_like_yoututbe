@@ -5,6 +5,10 @@
 
 ## Preview
  URL [Here](http://dandan.tw).
+ 
+ ![home page](https://i.imgur.com/cHCY4hc.png)
+ ![search page](https://i.imgur.com/o0H06h1.png)
+ 
 ## Build Setup
 
 ``` bash
